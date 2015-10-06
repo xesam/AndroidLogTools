@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
 import android.os.Environment;
 
 import java.io.File;
@@ -12,12 +11,9 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +24,6 @@ public class CrashLog implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler mDefaultHandler;
 
     private Context mContext;
-    private Map<String, String> logs = new HashMap<>();
 
     private CrashLog(Context context) {
         mContext = context.getApplicationContext();
@@ -58,49 +53,38 @@ public class CrashLog implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
-        collectDeviceInfo();
-        saveCrashInfo(ex);
+
+        String dateTime = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINA)).format(new Date());
+        String crashLogName = String.format("crash.%s.txt", dateTime);
+
+        String appInfo = collectAppInfo(dateTime);
+        String crashInfo = collectCrashInfo(ex);
+        write(crashLogName, appInfo, crashInfo);
         return true;
     }
 
-    private void collectDeviceInfo() {
+    private String collectAppInfo(String dateTime) {
+        StringBuilder sb = new StringBuilder()
+                .append("dateTime : ").append(dateTime).append("\n");
         try {
             PackageManager pm = mContext.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
             if (pi != null) {
                 String versionName = pi.versionName == null ? "unknown" : pi.versionName;
                 int versionCode = pi.versionCode;
-                logs.put("versionName", versionName);
-                logs.put("versionCode", versionCode + "");
-            }
-            Field[] fields = Build.class.getDeclaredFields();
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-                    logs.put(field.getName(), field.get(null).toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                sb.append("versionName : ").append(versionName).append("\n")
+                        .append("versionCode : ").append(versionCode + "").append("\n");
             }
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
+        return sb.append("\n").toString();
     }
 
     /**
      * 保存错误信息到文件中
      */
-    private void saveCrashInfo(Throwable ex) {
-
-        //打印设备信息
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : logs.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            sb.append(key).append("=").append(value).append("\n");
-        }
-
-        //打印错误信息
+    private String collectCrashInfo(Throwable ex) {
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
@@ -110,21 +94,23 @@ public class CrashLog implements Thread.UncaughtExceptionHandler {
             cause = cause.getCause();
         }
         printWriter.close();
-        sb.append("\n\n").append(writer.toString());
+        return writer.toString();
+    }
 
-        //写文件
+    private void write(String crashLogName, String appInfo, String crashInfo) {
         try {
-            String datetime = (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.CHINA)).format(new Date());
-            String logFileName = String.format("crash-%s.txt", datetime);
-
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 File file = mContext.getExternalFilesDir(null);
+                if (file == null) {
+                    return;
+                }
                 if (!file.exists()) {
                     file.mkdirs();
                 }
-                File logFile = new File(file.getAbsolutePath() + File.separator + logFileName);
+                File logFile = new File(file.getAbsolutePath() + File.separator + crashLogName);
                 FileOutputStream fos = new FileOutputStream(logFile);
-                fos.write(sb.toString().getBytes());
+                fos.write(appInfo.getBytes());
+                fos.write(crashInfo.getBytes());
                 fos.flush();
                 fos.close();
             }
