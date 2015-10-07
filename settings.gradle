@@ -1,1 +1,1 @@
-include ':app', ':android-log-tools'
+include ':app', ':AndroidLogTools'
