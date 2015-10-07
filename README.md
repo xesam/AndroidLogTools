@@ -2,6 +2,9 @@
 
 现在包含两个类：
 
+1. 打印日志
+1. 崩溃记录
+
 #打印日志 L
 对 android.util.Log 的简单封装，支持 d(Object... content) 的调用形式，避免对 String 的硬性要求，使用示例：
 
