@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dev.xesam.android.logtools.L;
 
 public class MainActivity extends Activity {
 
@@ -18,5 +19,26 @@ public class MainActivity extends Activity {
     @OnClick(R.id.CrashLog)
     public void testCrashLog() {
         throw new RuntimeException("test crash log");
+    }
+
+    @OnClick(R.id.L)
+    public void testL() {
+        L.d();
+        L.d(null);
+        L.d(null, null);
+        L.d(this);
+        L.d(this, this);
+        L.d(1);
+        L.d(1, 2);
+        L.d("a");
+        L.d("a", "b");
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 1000; i++) {
+            sb.append("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        }
+        sb.append("end");
+        L.d(this, sb);
+
     }
 }
