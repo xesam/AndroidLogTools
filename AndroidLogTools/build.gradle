@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'android-log-tools'
+
+    publishedGroupId = 'dev.xesam.android'
+    libraryName = 'AndroidLogTools'
+    artifact = 'android-log-tools'
+
+    libraryDescription = 'some tools for android log'
+
+    siteUrl = 'https://github.com/xesam/AndroidLogTools'
+    gitUrl = 'https://github.com/xesam/AndroidLogTools.git'
+
+    libraryVersion = '0.1.0'
+
+    developerId = 'xesam'
+    developerName = 'xesam'
+    developerEmail = 'xesamguo@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -21,3 +45,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
