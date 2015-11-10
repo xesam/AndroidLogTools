@@ -126,7 +126,16 @@ public final class L {
         } else if (object instanceof View) {
             return getTagFromView((View) object);
         } else {
-            return object.getClass().getSimpleName();
+            if (object.getClass().isAnonymousClass()) {
+                String[] segs = object.getClass().getName().split("\\.");
+                if (segs.length == 1) {
+                    return segs[0];
+                } else {
+                    return segs[segs.length - 1];
+                }
+            } else {
+                return object.getClass().getSimpleName();
+            }
         }
     }
 

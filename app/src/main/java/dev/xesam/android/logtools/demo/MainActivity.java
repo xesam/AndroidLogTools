@@ -40,5 +40,12 @@ public class MainActivity extends Activity {
         sb.append("end");
         L.d(this, sb);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                L.e(this, "run!run!run!");
+            }
+        }).start();
+
     }
 }
