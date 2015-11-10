@@ -7,7 +7,7 @@
 
 #使用方式
 
-    compile 'dev.xesam.android:AndroidLogTools:0.1.2'
+    compile 'dev.xesam.android:AndroidLogTools:0.1.3'
 
 #打印日志 L
 对 android.util.Log 的简单封装，支持 d(Object... content) 的调用形式，避免对 String 的硬性要求，使用示例：
@@ -54,4 +54,9 @@
 
     crash.2015-10-06T12:03:24.txt
 
+#更新日志
+
+###20151110
+
+1. 修正匿名类的 tag 为空的问题
 
