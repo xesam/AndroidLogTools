@@ -35,8 +35,8 @@ public final class L {
 
     }
 
-    public static void w(Object obj, Object... content) {
-        log(TYPE_W, obj, content);
+    public static void w(Object... content) {
+        log(TYPE_W, content);
     }
 
     public static void d(Object... content) {
