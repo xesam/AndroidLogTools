@@ -1,15 +1,15 @@
-#Android Log
+# Android Log
 
 现在包含两个类：
 
 1. 打印日志
 1. 崩溃记录
 
-#使用方式
+# 使用方式
 
     compile 'dev.xesam.android:AndroidLogTools:0.1.3'
 
-#打印日志 L
+# 打印日志 L
 对 android.util.Log 的简单封装，支持 d(Object... content) 的调用形式，避免对 String 的硬性要求，使用示例：
 
 开启日志（默认不打印）：
@@ -40,9 +40,9 @@
     D/a: L[empty_content]
     D/a: b
     
-#崩溃记录 CrashLog
+# 崩溃记录 CrashLog
 
-将崩溃记录写入外部文件中，便于检查。（注意，只在测试的时候才使用），使用示例:
+将崩溃记录写入外部文件中，便于检查。（注意，请只在测试的时候才使用），使用示例:
 
 在 Application 中注册:
 
@@ -54,13 +54,29 @@
 
     crash.2015-10-06T12:03:24.txt
 
-#更新日志
+# FileLogger
 
-###20151204
+将日志写入文件。（注意，请只在测试的时候才使用）
+
+    FileLogger.init(Context);//初始化一个文件
+    
+    FileLogger.log(String);//写日志
+    
+    FileLogger.newRound(String);//开始新一轮日志记录
+    
+    FileLogger.recycle(String);//回收资源
+
+# 更新日志
+
+### 20160310
+
+1. 增加文件日志功能
+
+### 20151204
 
 1. 修正 L.w 的参数问题
 
-###20151110
+### 20151110
 
 1. 修正匿名类的 tag 为空的问题
 

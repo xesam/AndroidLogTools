@@ -6,6 +6,7 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dev.xesam.android.logtools.L;
+import dev.xesam.android.logtools.FileLogger;
 
 public class MainActivity extends Activity {
 
@@ -19,6 +20,12 @@ public class MainActivity extends Activity {
     @OnClick(R.id.CrashLog)
     public void testCrashLog() {
         throw new RuntimeException("test crash log");
+    }
+
+    @OnClick(R.id.FileLogger)
+    public void testFileLogger() {
+        FileLogger.newRound();
+        FileLogger.log("this is file log");
     }
 
     @OnClick(R.id.L)

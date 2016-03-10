@@ -19,19 +19,19 @@ import java.util.concurrent.TimeUnit;
 /**
  * write crash log to file
  */
-public class CrashLog implements Thread.UncaughtExceptionHandler {
+public class CrashLogger implements Thread.UncaughtExceptionHandler {
 
     private Thread.UncaughtExceptionHandler mDefaultHandler;
 
     private Context mContext;
 
-    private CrashLog(Context context) {
+    private CrashLogger(Context context) {
         mContext = context.getApplicationContext();
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
     }
 
     public static void register(Context context) {
-        Thread.setDefaultUncaughtExceptionHandler(new CrashLog(context));
+        Thread.setDefaultUncaughtExceptionHandler(new CrashLogger(context));
     }
 
     @Override

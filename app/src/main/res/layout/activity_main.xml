@@ -19,4 +19,11 @@
         android:layout_height="wrap_content"
         android:text="test L" />
 
+
+    <Button
+        android:id="@+id/FileLogger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FileLogger" />
+
 </LinearLayout>
