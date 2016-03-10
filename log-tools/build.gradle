@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'AndroidLogTools'
+    bintrayName = 'log-tools'
 
     publishedGroupId = 'dev.xesam.android'
-    libraryName = 'AndroidLogTools'
-    artifact = 'AndroidLogTools'
+    libraryName = 'log-tools'
+    artifact = 'log-tools'
 
-    libraryDescription = 'some tools for android log'
+    libraryDescription = 'android日志工具'
 
     siteUrl = 'https://github.com/xesam/AndroidLogTools'
     gitUrl = 'https://github.com/xesam/AndroidLogTools.git'
 
-    libraryVersion = '0.1.4'
+    libraryVersion = '0.1.5'
 
     developerId = 'xesam'
     developerName = 'xesam'
