@@ -15,7 +15,7 @@ import java.util.Locale;
 
 /**
  * 日志控制台
- * <p>
+ * <p/>
  * Created by xesamguo@gmail.com on 16-3-8.
  */
 public final class FileLogger {
@@ -94,6 +94,7 @@ public final class FileLogger {
         try {
             if (writer != null) {
                 writer.flush();
+                writer.close();
             }
             String dateTime = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINA)).format(new Date());
             String filename = String.format(Locale.CHINA, "log-%s.txt", dateTime);
