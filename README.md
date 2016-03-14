@@ -7,7 +7,7 @@
 
 # 使用方式
 
-    compile 'dev.xesam.android:log-tools:0.1.5'
+    compile 'dev.xesam.android:log-tools:0.1.6'
 
 # 打印日志 L
 对 android.util.Log 的简单封装，支持 d(Object... content) 的调用形式，避免对 String 的硬性要求，使用示例：
