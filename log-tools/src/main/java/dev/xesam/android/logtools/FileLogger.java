@@ -15,7 +15,7 @@ import java.util.Locale;
 
 /**
  * 日志控制台
- * <p/>
+ * <p>
  * Created by xesamguo@gmail.com on 16-3-8.
  */
 public final class FileLogger {
@@ -89,25 +89,15 @@ public final class FileLogger {
         handlerThread = null;
     }
 
-    private static void createNewLog() {
+    private static void createNewLog(File dir, String filename) {
 
         try {
             if (writer != null) {
                 writer.flush();
                 writer.close();
             }
-            String dateTime = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINA)).format(new Date());
-            String filename = String.format(Locale.CHINA, "log-%s.txt", dateTime);
-            File dir = writerContext.getExternalFilesDir(null);
-            if (dir != null) {
-                if (!dir.exists()) {
-                    if (!dir.mkdirs()) {
-                        throw new RuntimeException("create log file fail");
-                    }
-                }
-                File file = new File(dir.getAbsolutePath() + File.separator + filename);
-                writer = new FileWriter(file);
-            }
+            File file = new File(dir.getAbsolutePath() + File.separator + filename);
+            writer = new FileWriter(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,10 +107,35 @@ public final class FileLogger {
      * 新一轮日志记录
      */
     public synchronized static void newRound() {
+        String dateTime = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINA)).format(new Date());
+        String filename = String.format(Locale.CHINA, "log-%s.txt", dateTime);
+        newRound(filename);
+    }
+
+    /**
+     * 新一轮日志记录
+     */
+    public synchronized static void newRound(String filename) {
+        File dir = writerContext.getExternalFilesDir(null);
+        if (dir != null) {
+            if (!dir.exists()) {
+                if (!dir.mkdirs()) {
+                    throw new RuntimeException("create log file fail");
+                }
+            }
+        }
+        newRound(dir, filename);
+    }
+
+    /**
+     * 新一轮日志记录
+     */
+    public synchronized static void newRound(File dir, String filename) {
         if (!mEnable) {
             return;
         }
-        createNewLog();
+
+        createNewLog(dir, filename);
     }
 
     public static void log(String data) {
