@@ -13,8 +13,8 @@ public class LogApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashLogger.register(this);
         L.enable(true);
+        CrashLogger.init(this);
         FileLogger.init(this);
     }
 

@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dev.xesam.android.logtools.L;
 import dev.xesam.android.logtools.FileLogger;
+import dev.xesam.android.logtools.L;
 
 public class MainActivity extends Activity {
 

@@ -30,7 +30,15 @@ public class CrashLogger implements Thread.UncaughtExceptionHandler {
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
     }
 
+    /**
+     * Use {@link #init(Context)}
+     */
+    @Deprecated
     public static void register(Context context) {
+        Thread.setDefaultUncaughtExceptionHandler(new CrashLogger(context));
+    }
+
+    public static void init(Context context) {
         Thread.setDefaultUncaughtExceptionHandler(new CrashLogger(context));
     }
 
