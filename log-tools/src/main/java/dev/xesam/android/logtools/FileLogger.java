@@ -17,7 +17,6 @@ import java.util.Locale;
 
 /**
  * 日志控制台
- * <p/>
  * Created by xesamguo@gmail.com on 16-3-8.
  */
 public final class FileLogger {
